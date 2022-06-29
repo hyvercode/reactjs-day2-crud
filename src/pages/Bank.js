@@ -20,14 +20,14 @@ function Bank() {
     const [searchBy, setSearchBy] = useState("")
 
     useEffect(() => {
-        getListBank().then(r => {
+        getListBank(pagination).then(r => {
             return r;
         })
     }, [])
 
-    const getListBank = async (e) => {
+    const getListBank = async (page) => {
         setIsLoading(true)
-        await Api.get(`/v1/bank/list?pageSize=${pagination.pageSize}&pageNumber=${pagination.currentPage}&sortBy=${sortBy}&sortType=${sortType}&searchBy=${searchBy}`, {
+        await Api.get(`/v1/bank/list?pageSize=${page.pageSize}&pageNumber=${page.currentPage}&sortBy=${sortBy}&sortType=${sortType}&searchBy=${searchBy}`, {
             headers: {
                 Authorization: getToken(),
             },
@@ -36,29 +36,14 @@ function Bank() {
             setBanks(response.data.content)
             setPagination(response.data.pagination)
         }, (error) => {
-            setPagination({
-                pageSize: 10,
-                currentPage: 1,
-                totalPages: 0,
-                totalRecords: 0,
-                isFirstPage: false,
-                isLastPage: false,
-            })
             setIsLoading(false)
             console.log(error.response.data.message)
         });
     }
 
     const refresh = async (e) => {
-        setPagination({
-            pageSize: 10,
-            currentPage: 1,
-            totalPages: 0,
-            totalRecords: 0,
-            isFirstPage: false,
-            isLastPage: false,
-        })
-        await getListBank().then(r => {
+        let page = Object.assign({}, pagination);
+        await getListBank(page).then(r => {
             return r;
         });
     }
@@ -70,22 +55,28 @@ function Bank() {
 
     const prev = async (e) => {
         e.preventDefault();
-        pagination.isFirstPage && setPagination((prevState) => ({
-            ...prevState,
-            currentPage: pagination.currentPage - 1,
-        })) && await getListBank().then(r => {
-            return r;
-        });
+        let page = Object.assign({}, pagination);
+        if (!pagination.isFirstPage) {
+            page.currentPage = pagination.currentPage - 1;
+            await getListBank(page)
+        }
     }
 
     const next = async (e) => {
         e.preventDefault();
-        pagination.isLastPage && setPagination((prevState) => ({
-            ...prevState,
-            currentPage: pagination.currentPage + 1,
-        })) && await getListBank().then(r => {
-            return r;
-        });
+        let page = Object.assign({}, pagination);
+        if (!pagination.isLastPage) {
+            page.currentPage = pagination.currentPage + 1;
+            await getListBank(page)
+        }
+    }
+
+    const changePageSize = async (e) => {
+        e.preventDefault();
+        let page = Object.assign({}, pagination);
+        page.pageSize = e.target.value;
+        page.currentPage = 1;
+        await getListBank(page)
     }
 
     return (<div className="container mt-5">
@@ -151,7 +142,7 @@ function Bank() {
                         className="form-select form-select-sm d-block w-10"
                         style={{width: 80, marginLeft: 5}}
                         value={pagination.pageSize}
-                        onChange={(e) => setPagination({pageSize: e.target.value})}
+                        onChange={changePageSize}
                     >
                         <option value="5">5</option>
                         <option value="10">10</option>
