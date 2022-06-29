@@ -16,12 +16,12 @@ function Bank() {
         isLastPage: false,
     })
     const [sortBy, setSortBy] = useState("bankName")
-    const [sortType, setSortType] = useState('DESC')
+    const [sortType, setSortType] = useState('ASC')
     const [searchBy, setSearchBy] = useState("")
 
     useEffect(() => {
-        getListBank(pagination).then(r => {
-            return r;
+        getListBank(pagination).then(res => {
+            return res;
         })
     }, [])
 
@@ -132,7 +132,7 @@ function Bank() {
                 </tr>
                 </tbody> : <tbody>
                 {banks.filter((item) => {
-                    return banks.includes(searchBy) ? banks.includes(searchBy) : item
+                    return item.bankName.includes(searchBy)
                 }).map((item, index) => (<tr key={index}>
                     <td>
                         {
