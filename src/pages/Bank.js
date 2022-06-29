@@ -92,7 +92,7 @@ function Bank() {
                 <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Bank Id</th>
+                    <th>Bank Code</th>
                     <th>Bank Name</th>
                     <th>Country Code</th>
                     <th>Active</th>
@@ -133,43 +133,43 @@ function Bank() {
                 </tr>))}
                 </tbody>}
             </table>
-            {/* Pagination */}
-            <div className="d-flex justify-content-between pagination mb-5 bg-light py-3 px-2">
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <label style={{marginTop: 1}}>Total Records :{pagination.totalRecords} </label>
-                    <label style={{marginTop: 1}} className="mx-3"> Per Page : </label>
-                    <select
-                        className="form-select form-select-sm d-block w-10"
-                        style={{width: 80, marginLeft: 5}}
-                        value={pagination.pageSize}
-                        onChange={changePageSize}
+        </div>
+        {/* Pagination */}
+        <div className="d-flex justify-content-md-between justify-content-around pagination mb-5 bg-light py-3 px-2">
+            <div className="btn-toolbar mb-2 mb-md-0">
+                <label style={{marginTop: 1}}>Total Records :{pagination.totalRecords} </label>
+                <label style={{marginTop: 1}} className="mx-3"> Per Page : </label>
+                <select
+                    className="form-select form-select-sm d-block w-10"
+                    style={{width: 80, marginLeft: 5}}
+                    value={pagination.pageSize}
+                    onChange={changePageSize}
+                >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+            </div>
+            <div className="btn-toolbar mb-2 mb-md-0">
+                <div className="btn-group mr-2">
+                    <button
+                        className="btn btn-sm btn-outline-secondary"
+                        onClick={prev}
                     >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                    </select>
-                </div>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-group mr-2">
-                        <button
-                            className="btn btn-sm btn-outline-secondary"
-                            onClick={prev}
-                        >
-                            Prev
-                        </button>
-                        <button className="btn btn-sm btn-outline-secondary" disabled>
-                            {pagination.currentPage}/{pagination.totalPages}
-                        </button>
-                        <button
-                            className="btn btn-sm btn-outline-secondary"
-                            onClick={next}
-                        >
-                            Next
-                        </button>
-                    </div>
+                        Prev
+                    </button>
+                    <button className="btn btn-sm btn-outline-secondary" disabled>
+                        {pagination.currentPage}/{pagination.totalPages}
+                    </button>
+                    <button
+                        className="btn btn-sm btn-outline-secondary"
+                        onClick={next}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
         </div>
