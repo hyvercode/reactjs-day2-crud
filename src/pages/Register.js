@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Api from "../api";
-import {setUserSession, windowReload} from "../helpers/Common";
-import {NavLink, useNavigate} from 'react-router-dom';
+import {windowReload} from "../helpers/Common";
+import {useNavigate} from 'react-router-dom';
 
 function Register(props) {
     const [email,setEmail] = useState('')

@@ -53,6 +53,13 @@ function Bank() {
         navigate('/bank/create');
     }
 
+    const searching = async (e) => {
+        let page = Object.assign({}, pagination);
+        await getListBank(page).then(r => {
+            return r;
+        });
+    }
+
     const prev = async (e) => {
         e.preventDefault();
         let page = Object.assign({}, pagination);
@@ -79,12 +86,30 @@ function Bank() {
         await getListBank(page)
     }
 
-    return (<div className="container mt-5">
-        <div className="d-flex justify-content-between">
-            <h2>Banks</h2>
-            <div>
-                <button className="btn btn-primary" onClick={refresh}>Refresh</button>
-                <button className="btn btn-primary m-2" onClick={create}>Add New</button>
+    return (<div className="container mt-3">
+        <h2>Banks</h2>
+        <div className="row">
+            <div className="col-9">
+                <div className="input-group mb-3 col-12">
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
+                        <option value="" selected>Choose...</option>
+                        <option value="bankId">Bank Code</option>
+                        <option value="bankName">Bank Name</option>
+                        <option value="countryCode">Country Code</option>
+                    </select>
+                    <input type="text" value={searchBy} onChange={(e) => setSearchBy(e.target.value)}
+                           className="form-control w-50 " placeholder="Searching"/>
+                    <select value={sortType} onChange={(e) => setSortType(e.target.value)}
+                            className="form-select input-group-text">
+                        <option value="ASC" selected>Asc</option>
+                        <option value="DESC">Desc</option>
+                    </select>
+                    <button className="input-group-text btn btn-primary" onClick={searching}>Search</button>
+                </div>
+            </div>
+            <div className="col-3">
+                <button className="btn btn-primary float-end mx-2" onClick={create}>Add New</button>
+                <button className="btn btn-primary float-end" onClick={refresh}>Refresh</button>
             </div>
         </div>
         <div className="table-responsive">
@@ -106,7 +131,9 @@ function Bank() {
                     </td>
                 </tr>
                 </tbody> : <tbody>
-                {banks.map((item, index) => (<tr key={index}>
+                {banks.filter((item) => {
+                    return banks.includes(searchBy) ? banks.includes(searchBy) : item
+                }).map((item, index) => (<tr key={index}>
                     <td>
                         {
                             pagination.pageSize * (pagination.currentPage - 1) + index + 1
