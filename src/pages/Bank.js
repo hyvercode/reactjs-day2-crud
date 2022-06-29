@@ -113,9 +113,9 @@ function Bank() {
             </div>
         </div>
         <div className="table-responsive">
-            <table className="table table-striped table-md">
+            <table className="table table-striped table-hover">
                 <thead>
-                <tr>
+                <tr className="border-top">
                     <th>No.</th>
                     <th>Bank Code</th>
                     <th>Bank Name</th>
@@ -162,7 +162,7 @@ function Bank() {
                 <label style={{marginTop: 1}}>Total Records :{pagination.totalRecords} </label>
                 <label style={{marginTop: 1}} className="mx-3"> Per Page : </label>
                 <select
-                    className="form-select form-select-sm d-block w-10"
+                    className="form-select form-select-sm d-block w-25"
                     style={{width: 80, marginLeft: 5}}
                     value={pagination.pageSize}
                     onChange={changePageSize}
