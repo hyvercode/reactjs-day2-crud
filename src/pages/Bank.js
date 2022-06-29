@@ -124,11 +124,6 @@ function Bank() {
                         >
                             Edit
                         </NavLink>
-                        <button
-                            className="btn btn-sm btn-outline-danger"
-                        >
-                            Delete
-                        </button>
                     </td>
                 </tr>))}
                 </tbody>}
