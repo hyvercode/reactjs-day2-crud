@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 function Register(props) {
     const [email,setEmail] = useState('')
     const [password,setPassword]=useState('')
-    const [active,setActive]=useState('')
+    const active ='Y';
     const employeeId = 1;
     const outletId=1;
     const [isLoading, setIsLoading] = useState(false);
@@ -47,13 +47,6 @@ function Register(props) {
                         <div className="form-group">
                             <label htmlFor="exampleInputPassword1">Password</label>
                             <input type="password" className="form-control" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/>
-                        </div>
-                        <div className="form-group mb-5">
-                            <label htmlFor="exampleFormControlSelect1">Active</label>
-                            <select className="form-select" value={active} onChange={(e)=>setActive(e.target.value)}>
-                                <option value="Y">Yes</option>
-                                <option value="N">No</option>
-                            </select>
                         </div>
                         {
                             isLoading?<i className="text-danger">Loading...</i>:<button type="submit" className="btn btn-primary">Submit</button>

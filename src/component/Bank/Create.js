@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import Api from "../../api";
-import {getToken, windowReload} from "../../helpers/Common";
+import {getToken} from "../../helpers/Common";
 
 function BankCreate() {
     let navigate = useNavigate();
